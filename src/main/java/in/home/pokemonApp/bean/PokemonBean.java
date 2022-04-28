@@ -1,6 +1,5 @@
 package in.home.pokemonApp.bean;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

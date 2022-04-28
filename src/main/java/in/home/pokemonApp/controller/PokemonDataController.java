@@ -33,6 +33,10 @@ public class PokemonDataController {
         this.pokemonService = pokemonService;
     }
 
+    /**
+     * Se realiza la recarga de toda la información obtenida y se guarda en la base de datos H2
+     * @return String
+     */
     @GetMapping()
     public ResponseEntity<String> completeData() {
         StopWatch watch = new StopWatch();
@@ -61,6 +65,11 @@ public class PokemonDataController {
         return new ResponseEntity<>(notifyGate.toString() + watch.getTotalTimeSeconds(), HttpStatus.OK);
     }
 
+    /**
+     * Se obtienen los 5 pokemons con más peso/altura/experiencia base.
+     * @param by sistema de ordenación w-peso/h-altura/e-experiencia
+     * @return Listado con los 5 pokemons correspondientes
+     */
     @GetMapping("/order")
     public ResponseEntity<List<PokemonDTO>> orderBy (@RequestParam (required = true) String by) {
         log.info ("BEGIN orderBy = {}", by);

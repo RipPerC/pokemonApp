@@ -91,20 +91,4 @@ public class PokeApiServiceImpl implements PokeApiService {
         }
         return pokemon;
     }
-
-    @Override
-    public void savePokemonIndex(PokemonIndexTO pokemonIndexTO) {
-        PokemonBean bean = new PokemonBean();
-        bean.setUrl(pokemonIndexTO.getUrl());
-        bean.setName(pokemonIndexTO.getName());
-        bean.setId(setIdPokemonBean(pokemonIndexTO.getUrl()));
-        pokemonRepository.save(bean);
-    }
-
-    private int setIdPokemonBean(String url){
-        url = StringUtils.chop(url);
-        String baseUrl = "https://pokeapi.co/api/v2/pokemon/";
-        return Integer.valueOf(url.substring(baseUrl.length()));
-    }
-
 }
