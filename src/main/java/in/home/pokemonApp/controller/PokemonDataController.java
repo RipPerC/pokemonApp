@@ -71,7 +71,7 @@ public class PokemonDataController {
      * @return Listado con los 5 pokemons correspondientes
      */
     @GetMapping("/order")
-    public ResponseEntity<List<PokemonDTO>> orderBy (@RequestParam (required = true) String by) {
+    public List<PokemonDTO> orderBy (@RequestParam (required = true) String by) {
         log.info ("BEGIN orderBy = {}", by);
         List<PokemonDTO> pokemonList = new ArrayList<>();
 
@@ -82,6 +82,6 @@ public class PokemonDataController {
         } else {
             pokemonList = pokemonService.getMoreBaseExperiencePokemon();
         }
-        return new ResponseEntity<List<PokemonDTO>>(pokemonList, HttpStatus.OK);
+        return pokemonList;
     }
 }
