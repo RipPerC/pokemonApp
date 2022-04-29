@@ -54,3 +54,7 @@ Base de datos en el directorio ~/pokemonApp.mv.db
 1. w = weight
 2. h = height
 3. e = base experience
+
+### Puntos de mejora
+- Organización del código en base a un patrón más eficiente.
+- Reevaluación de los tiempos de respuesta.
