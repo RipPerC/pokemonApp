@@ -10,11 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.NotSupportedException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +39,9 @@ public class PokemonDataController {
     public ResponseEntity<String> completeData() {
         StopWatch watch = new StopWatch();
         StringBuffer notifyGate = new StringBuffer();
-        notifyGate.append("Realizada la precarga de información.\nSeleccione la operación que desea realizar:\n");
+        notifyGate.append("Preload done.\nSelect the listing you want to get:\n");
         notifyGate.append("\"http://localhost:8080/api/v1/pokemon/order?by={w|h|e}\"\n");
-        notifyGate.append("Tiempo transcurrido (en segundos): ");
+        notifyGate.append("Time elapsed (in sec): ");
 
         log.info("BEGIN completeData");
         watch.start();
@@ -55,8 +53,8 @@ public class PokemonDataController {
                 pokeApiService.getPokemonData(index.getUrl());
             }
         } catch (IOException e) {
-            log.error("Error al obtener el listado de Pokemons : " + e.getLocalizedMessage());
-            return new ResponseEntity<>("Error al obtener el listado de Pokemons : " + e.getLocalizedMessage(),
+            log.error("Error getting list of Pokemons : " + e.getLocalizedMessage());
+            return new ResponseEntity<>("Error getting list of Pokemons : " + e.getLocalizedMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -71,7 +69,7 @@ public class PokemonDataController {
      * @return Listado con los 5 pokemons correspondientes
      */
     @GetMapping("/order")
-    public List<PokemonDTO> orderBy (@RequestParam (required = true) String by) {
+    public ResponseEntity<List<PokemonDTO>> orderBy (@RequestParam (required = true) String by){
         log.info ("BEGIN orderBy = {}", by);
         List<PokemonDTO> pokemonList = new ArrayList<>();
 
@@ -79,9 +77,13 @@ public class PokemonDataController {
             pokemonList = pokemonService.getHeaviestPokemon();
         } else if (by.equals("h")) {
             pokemonList = pokemonService.getHighestPokemon();
-        } else {
+        } else if (by.equals("e")) {
             pokemonList = pokemonService.getMoreBaseExperiencePokemon();
+        } else {
+            log.error("The sort type received is not accepted: {}", by);
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
-        return pokemonList;
+        log.info("END orderBy");
+        return new ResponseEntity<>(pokemonList, HttpStatus.OK);
     }
 }
