@@ -51,6 +51,6 @@ mensaje cuando se termine).
 
 Base de datos en el directorio ~/pokemonApp.mv.db
 
-w = weight
-h = height
-e = base experience
+1. w = weight
+2. h = height
+3. e = base experience
