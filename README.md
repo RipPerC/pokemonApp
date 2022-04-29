@@ -58,3 +58,4 @@ Base de datos en el directorio ~/pokemonApp.mv.db
 ### Puntos de mejora
 - Organización del código en base a un patrón más eficiente.
 - Reevaluación de los tiempos de respuesta.
+- Aumentar cobertura
