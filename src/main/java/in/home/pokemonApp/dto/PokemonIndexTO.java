@@ -16,13 +16,4 @@ public class PokemonIndexTO {
     private String name;
     @SerializedName("url")
     private String url;
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("PokemonIndex{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", url='").append(url).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }
